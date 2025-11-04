@@ -239,11 +239,11 @@ We welcome contributions from researchers, developers, and domain experts! See o
 
 ## 📚 Documentation
 
-- **[User Guide](docs/USER_GUIDE.md)**: Complete usage instructions
-- **[API Reference](docs/API_REFERENCE.md)**: REST API documentation  
-- **[Mathematical Capabilities](docs/MATHEMATICAL_CAPABILITIES.md)**: SymPy function reference
-- **[Testing Guide](docs/TESTING_GUIDE.md)**: Example tests and validation
-- **[Sample Files Guide](docs/SAMPLES_GUIDE.md)**: Using provided test data
+- **[User Guide](project/docs/user-guide/QUICK_START.md)**: Complete usage instructions
+- **[API Reference](project/docs/API_REFERENCE.md)**: REST API documentation  
+- **[Mathematical Capabilities](project/docs/MATHEMATICAL_CAPABILITIES.md)**: SymPy function reference
+- **[Testing Guide](project/docs/TESTING_GUIDE.md)**: Example tests and validation
+- **[Sample Files Guide](project/docs/SAMPLES_GUIDE.md)**: Using provided test data
 
 ---
 
@@ -273,7 +273,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/stix26/multimodal-analytics-platform/issues)
 - **Documentation**: [Project Wiki](https://github.com/stix26/multimodal-analytics-platform/wiki)
-- **Discussions**: [GitHub Discussions](https://github.com/stix26/multimodal-analytics-platform/discussions)
 
 ---
 
