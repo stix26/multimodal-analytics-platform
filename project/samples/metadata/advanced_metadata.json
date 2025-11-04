@@ -1,0 +1,40 @@
+{
+  "analysis_config": {
+    "model_version": "2.0",
+    "preprocessing": {
+      "normalize": true,
+      "resize": [224, 224],
+      "augment": false
+    },
+    "postprocessing": {
+      "threshold": 0.85,
+      "filter_noise": true
+    }
+  },
+  "content_info": {
+    "source": "professional_camera",
+    "location": "San Francisco, CA",
+    "weather": "sunny",
+    "lighting": "natural",
+    "category": "urban_landscape"
+  },
+  "technical_specs": {
+    "device": "iPhone 15 Pro",
+    "resolution": "4032x3024",
+    "iso": 200,
+    "aperture": "f/2.8",
+    "shutter_speed": "1/250"
+  },
+  "ml_parameters": {
+    "confidence_threshold": 0.90,
+    "batch_size": 1,
+    "feature_extraction": "resnet50",
+    "audio_processing": "wav2vec2"
+  },
+  "session_data": {
+    "session_id": "sess_20241104_103045",
+    "user_agent": "AI-Platform-Demo/1.0",
+    "api_version": "v1.2",
+    "processing_time_limit": 30
+  }
+}

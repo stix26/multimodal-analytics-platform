@@ -1,0 +1,27 @@
+# AI-Powered Multi-Modal Analytics Platform Requirements
+# Install from local packages: pip install --find-links ../ML_Libraries_Downloads/consolidated_packages/ --no-index -r requirements.txt
+
+# Core ML Libraries
+torch>=2.9.0
+torchvision>=0.24.0
+torchaudio>=2.9.0
+numpy>=2.3.4
+pandas>=2.3.3
+scikit-learn>=1.7.2
+
+# Graph and Math
+networkx>=3.5
+sympy>=1.14.0
+
+# Web Framework
+flask>=3.0.0
+jinja2>=3.1.6
+markupsafe>=3.0.3
+
+# Image Processing
+pillow>=12.0.0
+
+# Utilities
+filelock>=3.20.0
+fsspec>=2025.10.0
+

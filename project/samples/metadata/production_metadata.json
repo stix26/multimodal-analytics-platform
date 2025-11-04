@@ -1,0 +1,38 @@
+{
+  "deployment_info": {
+    "environment": "production",
+    "service_version": "1.2.0",
+    "region": "us-west-2",
+    "cluster": "ai-platform-prod"
+  },
+  "request_context": {
+    "client_id": "enterprise_client_001",
+    "api_key_hash": "sha256:a1b2c3...",
+    "request_id": "req_2024110410304512345",
+    "trace_id": "trace_xyz789"
+  },
+  "business_context": {
+    "use_case": "content_moderation",
+    "industry": "social_media",
+    "compliance": ["GDPR", "CCPA"],
+    "data_retention": "30_days"
+  },
+  "performance_requirements": {
+    "max_processing_time": 5000,
+    "memory_limit": "2GB",
+    "cpu_limit": "2_cores",
+    "priority": "high"
+  },
+  "quality_assurance": {
+    "enable_monitoring": true,
+    "log_level": "INFO",
+    "metrics_collection": true,
+    "error_reporting": true
+  },
+  "security": {
+    "encrypt_features": false,
+    "audit_log": true,
+    "pii_detection": true,
+    "content_filtering": "strict"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "audio_properties": {
+    "sample_rate": 16000,
+    "duration": 3.0,
+    "channels": 1,
+    "bit_depth": 16,
+    "format": "wav"
+  },
+  "content_type": "musical",
+  "genre": "synthetic",
+  "instruments": ["sine_wave", "chord", "sweep"],
+  "analysis_focus": {
+    "spectral_analysis": true,
+    "frequency_domain": true,
+    "temporal_features": true
+  },
+  "quality_metrics": {
+    "signal_to_noise": 85.2,
+    "dynamic_range": 72.1,
+    "peak_level": -6.0
+  },
+  "processing_notes": "Generated for AI platform testing",
+  "expected_features": {
+    "dominant_frequency": 440,
+    "harmonic_content": "rich",
+    "temporal_variation": "moderate"
+  }
+}

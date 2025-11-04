@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Multi-Modal Computational Analytics Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f8fafc;
+            --accent-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.025em;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-header {
+            padding: 24px 24px 0 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 0;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #ffffff 100%);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .card-content {
+            padding: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            background: var(--secondary-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        input[type="file"]:hover {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        textarea {
+            min-height: 100px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e40af 100%);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #059669 100%);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+        
+        .results-container {
+            margin-top: 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: white;
+        }
+        
+        .status-badge {
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-badge.success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            color: #065f46;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .status-badge.error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+            color: #991b1b;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .status-badge.warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
+            color: #92400e;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        
+        .analysis-result {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            border: 1px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .analysis-result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color) 0%, var(--primary-color) 100%);
+        }
+        
+        .analysis-result.success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+        
+        .analysis-result.warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(217, 119, 6, 0.05) 100%);
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+        
+        .analysis-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px 0;
+        }
+        
+        .metric-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .metric-value {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            font-weight: 600;
+            color: var(--text-primary);
+            background: var(--secondary-color);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        details {
+            margin-top: 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        summary {
+            cursor: pointer;
+            background: var(--secondary-color);
+            padding: 16px 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+        
+        summary:hover {
+            background: #e2e8f0;
+        }
+        
+        pre {
+            background: #ffffff;
+            color: #1e293b;
+            padding: 20px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-weight: 500;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(29, 78, 216, 0.05) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 12px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .icon {
+            font-size: 1.2rem;
+        }
+        
+            .pulse {
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.7; }
+            }
+            
+            .example-btn {
+                background: rgba(37, 99, 235, 0.1);
+                border: 1px solid rgba(37, 99, 235, 0.2);
+                color: var(--primary-color);
+                padding: 8px 12px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 0.8rem;
+                font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .example-btn:hover {
+                background: rgba(37, 99, 235, 0.15);
+                border-color: var(--primary-color);
+                transform: translateY(-1px);
+            }
+            
+            .example-btn:active {
+                transform: translateY(0);
+                background: rgba(37, 99, 235, 0.2);
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+    <h1><i class="fas fa-microscope"></i> Advanced Multi-Modal Computational Analytics Platform</h1>
+                    <p class="subtitle">Research-grade computational analysis combining Computer Vision, Audio Processing, and Advanced Mathematics</p>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-brain icon" style="color: var(--primary-color);"></i>
+                                Multi-Modal Computational Analysis
+                        </h3>
+                            <p class="card-description">Upload images and audio for computational analysis using ResNet50 and Wav2Vec2 models</p>
+                    </div>
+                    <div class="card-content">
+                        <form id="analysis-form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="image"><i class="fas fa-image"></i> Image File</label>
+                                <input type="file" id="image" name="image" accept="image/*">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="audio"><i class="fas fa-microphone"></i> Audio File</label>
+                                <input type="file" id="audio" name="audio">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-code"></i> Metadata (JSON)</label>
+                                
+                                <!-- Metadata input mode toggle -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="display: flex; gap: 16px; margin-bottom: 12px;">
+                                        <label style="display: flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; font-size: 0.9rem;">
+                                            <input type="radio" name="metadata-mode" value="text" checked onchange="toggleMetadataMode()" style="margin: 0;">
+                                            <i class="fas fa-keyboard"></i> Type JSON
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; font-size: 0.9rem;">
+                                            <input type="radio" name="metadata-mode" value="file" onchange="toggleMetadataMode()" style="margin: 0;">
+                                            <i class="fas fa-file-upload"></i> Upload JSON File
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Text input for metadata -->
+                                <div id="metadata-text-input">
+                                    <textarea id="metadata" name="metadata" placeholder='{"source": "upload", "category": "analysis", "quality": "high"}'></textarea>
+                                    <div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                                        <i class="fas fa-lightbulb"></i> 
+                                        Try sample: <code>{"source": "sample_upload", "category": "test", "quality": "high"}</code>
+                                    </div>
+                                </div>
+                                
+                                <!-- File upload for metadata -->
+                                <div id="metadata-file-input" style="display: none;">
+                                    <input type="file" id="metadata-file" onchange="handleMetadataFile(this)">
+                                    <div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                                        <i class="fas fa-folder-open"></i> 
+                                        Try samples: <code>samples/metadata/basic_metadata.json</code> or <code>samples/metadata/multimodal_metadata.json</code>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-rocket"></i>
+                                Start Analysis
+                            </button>
+                        </form>
+                        
+                        <div id="results" class="results-container" style="display: none;"></div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-calculator icon" style="color: var(--accent-color);"></i>
+                            Symbolic Mathematics
+                        </h3>
+                        <p class="card-description">Advanced calculus operations including derivatives, integrals, and equation solving</p>
+                    </div>
+                    <div class="card-content">
+                        <form id="math-form">
+                                <div class="form-group">
+                                    <label for="expression"><i class="fas fa-function"></i> Mathematical Expression</label>
+                                    <input type="text" id="expression" name="expression" placeholder="sin(x**2) + exp(cos(x)) + log(sqrt(x))">
+                                </div>
+                                
+                                <!-- Example expressions -->
+                                <div style="margin-bottom: 20px;">
+                                    <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; color: var(--text-primary);">
+                                        <i class="fas fa-lightbulb" style="color: var(--warning-color);"></i> Quick Examples - Click to Use:
+                                    </h4>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem;">
+                                        <button type="button" class="example-btn" onclick="useExample('x**2 + 2*x + 1')">
+                                            <i class="fas fa-copy"></i> x**2 + 2*x + 1
+                                        </button>
+                                        <button type="button" class="example-btn" onclick="useExample('sin(x) + cos(x)')">
+                                            <i class="fas fa-copy"></i> sin(x) + cos(x)
+                                        </button>
+                                        <button type="button" class="example-btn" onclick="useExample('exp(x) * log(x)')">
+                                            <i class="fas fa-copy"></i> exp(x) * log(x)
+                                        </button>
+                                        <button type="button" class="example-btn" onclick="useExample('sqrt(x**2 + 1)')">
+                                            <i class="fas fa-copy"></i> sqrt(x**2 + 1)
+                                        </button>
+                                        <button type="button" class="example-btn" onclick="useExample('sin(x**2) * exp(-x)')">
+                                            <i class="fas fa-copy"></i> sin(x**2) * exp(-x)
+                                        </button>
+                                        <button type="button" class="example-btn" onclick="useExample('atan(x) + sinh(x)')">
+                                            <i class="fas fa-copy"></i> atan(x) + sinh(x)
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn">
+                                    <i class="fas fa-calculator"></i>
+                                    Calculate
+                                </button>
+                        </form>
+                        <div id="math-results" class="results-container" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <i class="fas fa-eye icon" style="color: var(--primary-color);"></i>
+                        <h4>Computer Vision</h4>
+                    </div>
+                    <p>ResNet50 deep learning model extracts 1000-dimensional semantic features from images</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <i class="fas fa-waveform-lines icon" style="color: var(--accent-color);"></i>
+                        <h4>Audio Processing</h4>
+                    </div>
+                    <p>Wav2Vec2 model processes audio signals into 512-dimensional feature representations</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <i class="fas fa-project-diagram icon" style="color: var(--warning-color);"></i>
+                        <h4>Data Integration</h4>
+                    </div>
+                    <p>Intelligent fusion of multi-modal data with StandardScaler normalization</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <i class="fas fa-infinity icon" style="color: #8b5cf6;"></i>
+                        <h4>Symbolic Math</h4>
+                    </div>
+                    <p>University-level calculus with SymPy: derivatives, integrals, equation solving</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <script>
+            // Metadata input mode toggle
+            function toggleMetadataMode() {
+                const textMode = document.querySelector('input[name="metadata-mode"][value="text"]').checked;
+                const textInput = document.getElementById('metadata-text-input');
+                const fileInput = document.getElementById('metadata-file-input');
+                const metadataTextarea = document.getElementById('metadata');
+                
+                if (textMode) {
+                    textInput.style.display = 'block';
+                    fileInput.style.display = 'none';
+                    // Clear the hidden textarea when switching to text mode
+                    metadataTextarea.removeAttribute('data-from-file');
+                } else {
+                    textInput.style.display = 'none';
+                    fileInput.style.display = 'block';
+                }
+            }
+            
+            // Handle metadata file upload
+            function handleMetadataFile(input) {
+                const file = input.files[0];
+                const metadataTextarea = document.getElementById('metadata');
+                
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            // Validate JSON
+                            const jsonData = JSON.parse(e.target.result);
+                            // Store in the textarea (hidden) for form submission
+                            metadataTextarea.value = e.target.result;
+                            metadataTextarea.setAttribute('data-from-file', file.name);
+                            
+                            // Show success feedback
+                            const feedback = input.parentNode.querySelector('.file-feedback');
+                            if (feedback) feedback.remove();
+                            
+                            const successDiv = document.createElement('div');
+                            successDiv.className = 'file-feedback';
+                            successDiv.style.cssText = 'margin-top: 8px; padding: 8px 12px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; font-size: 0.85rem; color: #065f46;';
+                            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> <strong>${file.name}</strong> loaded successfully (${Object.keys(jsonData).length} properties)`;
+                            input.parentNode.appendChild(successDiv);
+                            
+                        } catch (error) {
+                            // Show error feedback
+                            const feedback = input.parentNode.querySelector('.file-feedback');
+                            if (feedback) feedback.remove();
+                            
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'file-feedback';
+                            errorDiv.style.cssText = 'margin-top: 8px; padding: 8px 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; font-size: 0.85rem; color: #991b1b;';
+                            errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Invalid JSON file: ${error.message}`;
+                            input.parentNode.appendChild(errorDiv);
+                            
+                            // Clear the textarea
+                            metadataTextarea.value = '';
+                            metadataTextarea.removeAttribute('data-from-file');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            }
+            
+            // Use example function for math expressions
+            function useExample(expression) {
+                document.getElementById('expression').value = expression;
+                // Add visual feedback
+                const input = document.getElementById('expression');
+                input.style.background = 'rgba(16, 185, 129, 0.1)';
+                input.style.borderColor = 'var(--accent-color)';
+                setTimeout(() => {
+                    input.style.background = 'white';
+                    input.style.borderColor = 'var(--border-color)';
+                }, 1000);
+            }
+            
+            // Multi-modal analysis form
+        document.getElementById('analysis-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Processing with AI models...</div>';
+            
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const results = await response.json();
+                
+                let html = '<div class="status-badge success"><i class="fas fa-check-circle"></i>Analysis Complete!</div>';
+                
+                // Display results in a more readable format
+                if (results.status === 'completed') {
+                    
+                    // Image Features
+                    if (results.image_features) {
+                        html += '<div class="analysis-result success">';
+                        html += '<h4 class="analysis-title"><i class="fas fa-image"></i> Image Analysis Results</h4>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Features Extracted:</span>';
+                        html += '<span class="metric-value">' + results.image_features.shape.join(' × ') + ' dimensions</span>';
+                        html += '</div>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Sample Values:</span>';
+                        html += '<span class="metric-value">[' + results.image_features.sample.slice(0, 5).map(x => x.toFixed(3)).join(', ') + '...]</span>';
+                        html += '</div>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Model:</span>';
+                        html += '<span class="metric-value"><i class="fas fa-check"></i> ResNet50 (ImageNet)</span>';
+                        html += '</div>';
+                        html += '</div>';
+                    } else {
+                        html += '<div class="analysis-result warning">';
+                        html += '<h4 class="analysis-title"><i class="fas fa-image"></i> Image Analysis</h4>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Status:</span>';
+                        html += '<span class="metric-value"><i class="fas fa-exclamation-triangle"></i> No image uploaded</span>';
+                        html += '</div>';
+                        html += '</div>';
+                    }
+                    
+                    // Audio Features
+                    if (results.audio_features) {
+                        html += '<div class="analysis-result success">';
+                        html += '<h4 class="analysis-title"><i class="fas fa-waveform-lines"></i> Audio Analysis Results</h4>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Features Extracted:</span>';
+                        html += '<span class="metric-value">' + results.audio_features.shape.join(' × ') + ' dimensions</span>';
+                        html += '</div>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Sample Values:</span>';
+                        html += '<span class="metric-value">[' + results.audio_features.sample.slice(0, 5).map(x => x.toFixed(3)).join(', ') + '...]</span>';
+                        html += '</div>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Model:</span>';
+                        html += '<span class="metric-value"><i class="fas fa-check"></i> Wav2Vec2</span>';
+                        html += '</div>';
+                        html += '</div>';
+                    } else {
+                        html += '<div class="analysis-result warning">';
+                        html += '<h4 class="analysis-title"><i class="fas fa-waveform-lines"></i> Audio Analysis</h4>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Status:</span>';
+                        html += '<span class="metric-value"><i class="fas fa-exclamation-triangle"></i> No audio uploaded</span>';
+                        html += '</div>';
+                        html += '</div>';
+                    }
+                    
+                    // Multi-Modal Integration
+                    if (results.integrated_data) {
+                        html += '<div class="analysis-result success">';
+                        html += '<h4 class="analysis-title"><i class="fas fa-project-diagram"></i> Multi-Modal Integration</h4>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Combined Features:</span>';
+                        html += '<span class="metric-value">' + results.integrated_data.shape.join(' × ') + ' dimensions</span>';
+                        html += '</div>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Integration Method:</span>';
+                        html += '<span class="metric-value"><i class="fas fa-check"></i> StandardScaler Normalization</span>';
+                        html += '</div>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Status:</span>';
+                        html += '<span class="metric-value"><i class="fas fa-check-circle"></i> Successfully Combined</span>';
+                        html += '</div>';
+                        html += '</div>';
+                    } else if (results.image_features || results.audio_features) {
+                        html += '<div class="analysis-result warning">';
+                        html += '<h4 class="analysis-title"><i class="fas fa-project-diagram"></i> Multi-Modal Integration</h4>';
+                        html += '<div class="metric">';
+                        html += '<span class="metric-label">Status:</span>';
+                        html += '<span class="metric-value"><i class="fas fa-info-circle"></i> Requires image + audio</span>';
+                        html += '</div>';
+                        html += '</div>';
+                    }
+                    
+                    // Errors
+                    if (results.errors && results.errors.length > 0) {
+                        html += '<div style="background: #f8d7da; padding: 15px; border-radius: 5px; margin: 10px 0;">';
+                        html += '<h4 style="color: #721c24; margin: 0 0 10px 0;">⚠️ Processing Errors</h4>';
+                        results.errors.forEach((error, i) => {
+                            html += '<div><strong>Error ' + (i + 1) + ':</strong> ' + error + '</div>';
+                        });
+                        html += '</div>';
+                    }
+                    
+                    html += '</div>';
+                }
+                
+                // Raw JSON (collapsible)
+                html += '<details style="margin-top: 20px;"><summary style="cursor: pointer; background: #f0f0f0; padding: 10px; border-radius: 5px;"><strong>📋 Raw JSON Response (click to expand)</strong></summary>';
+                html += '<pre style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; overflow-x: auto;">' + JSON.stringify(results, null, 2) + '</pre>';
+                html += '</details>';
+                
+                resultsDiv.innerHTML = html;
+            } catch (error) {
+                resultsDiv.innerHTML = '<div class="status error">❌ Error: ' + error.message + '</div>';
+            }
+        };
+        
+        // Mathematical analysis form
+        document.getElementById('math-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const resultsDiv = document.getElementById('math-results');
+            const expression = document.getElementById('expression').value;
+            
+            if (!expression) {
+                resultsDiv.innerHTML = '<div class="status error">Please enter an expression</div>';
+                return;
+            }
+            
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Computing with SymPy engine...</div>';
+            
+            try {
+                const response = await fetch('/api/math', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ expression: expression })
+                });
+                
+                const results = await response.json();
+                
+                let html = '<div class="status-badge success"><i class="fas fa-check-circle"></i>Calculation Complete!</div>';
+                
+                if (results.derivative) {
+                    html += '<div class="analysis-result success">';
+                    html += '<h4 class="analysis-title"><i class="fas fa-function"></i> Symbolic Mathematics Results</h4>';
+                    html += '<div class="metric">';
+                    html += '<span class="metric-label">Original:</span>';
+                    html += '<span class="metric-value">' + results.original + '</span>';
+                    html += '</div>';
+                    html += '<div class="metric">';
+                    html += '<span class="metric-label">Derivative:</span>';
+                    html += '<span class="metric-value">' + results.derivative + '</span>';
+                    html += '</div>';
+                    html += '<div class="metric">';
+                    html += '<span class="metric-label">Integral:</span>';
+                    html += '<span class="metric-value">' + results.integral + '</span>';
+                    html += '</div>';
+                    html += '<div class="metric">';
+                    html += '<span class="metric-label">Engine:</span>';
+                    html += '<span class="metric-value"><i class="fas fa-check"></i> SymPy CAS</span>';
+                    html += '</div>';
+                    html += '</div>';
+                }
+                
+                // Raw JSON (collapsible)
+                html += '<details><summary><i class="fas fa-code"></i> Technical Details</summary>';
+                html += '<pre>' + JSON.stringify(results, null, 2) + '</pre>';
+                html += '</details>';
+                resultsDiv.innerHTML = html;
+            } catch (error) {
+                resultsDiv.innerHTML = '<div class="status error">❌ Error: ' + error.message + '</div>';
+            }
+        };
+        
+        // Check health on load
+        fetch('/health')
+            .then(r => r.json())
+            .then(data => {
+                console.log('Platform status:', data);
+            });
+    </script>
+</body>
+</html>
+

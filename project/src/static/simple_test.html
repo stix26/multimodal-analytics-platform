@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Upload Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .result { background: #f0f0f0; padding: 15px; margin: 15px 0; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+        input { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h2>🔧 Simple Upload Test</h2>
+    
+    <h3>Test 1: Image Upload</h3>
+    <input type="file" id="imageFile" accept="image/*">
+    <input type="text" id="imageMeta" value='{"test": "simple"}' placeholder="Metadata JSON">
+    <button onclick="testImage()">Test Image Upload</button>
+    <div id="imageResult" class="result"></div>
+    
+    <h3>Test 2: Math Analysis</h3>
+    <input type="text" id="mathExpr" value="x**2 + 1" placeholder="Math expression">
+    <button onclick="testMath()">Test Math</button>
+    <div id="mathResult" class="result"></div>
+    
+    <script>
+        async function testImage() {
+            const fileInput = document.getElementById('imageFile');
+            const metaInput = document.getElementById('imageMeta');
+            const resultDiv = document.getElementById('imageResult');
+            
+            if (!fileInput.files[0]) {
+                resultDiv.innerHTML = '❌ Please select an image file';
+                return;
+            }
+            
+            resultDiv.innerHTML = '⏳ Testing...';
+            
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            formData.append('metadata', metaInput.value);
+            
+            try {
+                console.log('Sending image request...');
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+                
+                const text = await response.text();
+                console.log('Response text:', text);
+                
+                try {
+                    const data = JSON.parse(text);
+                    if (data.image_features) {
+                        resultDiv.innerHTML = \`
+                            ✅ SUCCESS!<br>
+                            Status: \${data.status}<br>
+                            Image Features: \${data.image_features.shape.join('×')} dimensions<br>
+                            Sample: [\${data.image_features.sample.slice(0,3).map(x=>x.toFixed(3)).join(', ')}...]
+                        \`;
+                    } else {
+                        resultDiv.innerHTML = \`⚠️ No image features: \${JSON.stringify(data, null, 2)}\`;
+                    }
+                } catch (e) {
+                    resultDiv.innerHTML = \`❌ JSON Parse Error: \${e}<br>Raw: \${text}\`;
+                }
+                
+            } catch (error) {
+                console.error('Request error:', error);
+                resultDiv.innerHTML = \`❌ Request Error: \${error.message}\`;
+            }
+        }
+        
+        async function testMath() {
+            const exprInput = document.getElementById('mathExpr');
+            const resultDiv = document.getElementById('mathResult');
+            
+            resultDiv.innerHTML = '⏳ Testing...';
+            
+            try {
+                console.log('Sending math request...');
+                const response = await fetch('/api/math', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ expression: exprInput.value })
+                });
+                
+                console.log('Math response status:', response.status);
+                const data = await response.json();
+                
+                if (data.derivative) {
+                    resultDiv.innerHTML = \`
+                        ✅ SUCCESS!<br>
+                        Original: \${data.original}<br>
+                        Derivative: \${data.derivative}<br>
+                        Integral: \${data.integral}
+                    \`;
+                } else {
+                    resultDiv.innerHTML = \`❌ Math Error: \${JSON.stringify(data, null, 2)}\`;
+                }
+                
+            } catch (error) {
+                console.error('Math error:', error);
+                resultDiv.innerHTML = \`❌ Math Error: \${error.message}\`;
+            }
+        }
+    </script>
+</body>
+</html>

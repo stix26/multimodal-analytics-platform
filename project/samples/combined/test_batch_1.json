@@ -1,0 +1,46 @@
+{
+  "batch_info": {
+    "batch_id": "batch_test_001",
+    "created_at": "2024-11-04T10:30:00Z",
+    "total_samples": 3,
+    "processing_mode": "sequential"
+  },
+  "samples": [
+    {
+      "sample_id": "sample_001",
+      "image_file": "gradient_sample.jpg",
+      "audio_file": "sine_wave_440hz.wav",
+      "metadata": {
+        "content_type": "synthetic_test",
+        "complexity": "low",
+        "expected_integration": true
+      }
+    },
+    {
+      "sample_id": "sample_002", 
+      "image_file": "red_sample.jpg",
+      "audio_file": "a_major_chord.wav",
+      "metadata": {
+        "content_type": "color_music_pair",
+        "complexity": "medium",
+        "expected_integration": true
+      }
+    },
+    {
+      "sample_id": "sample_003",
+      "image_file": "blue_sample.jpg", 
+      "audio_file": "frequency_sweep.wav",
+      "metadata": {
+        "content_type": "dynamic_test",
+        "complexity": "high",
+        "expected_integration": true
+      }
+    }
+  ],
+  "validation_criteria": {
+    "all_samples_processed": true,
+    "feature_extraction_success": true,
+    "integration_success": true,
+    "processing_time_under": 15000
+  }
+}

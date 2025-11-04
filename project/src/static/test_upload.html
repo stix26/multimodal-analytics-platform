@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Upload Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .result { background: #f0f0f0; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        input[type="file"] { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h2>🧪 Upload Test Page</h2>
+    
+    <form id="test-form">
+        <div>
+            <label>Upload Image:</label><br>
+            <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+        
+        <div style="margin: 10px 0;">
+            <label>Metadata (JSON):</label><br>
+            <input type="text" id="metadata" name="metadata" value='{"test": "debug", "source": "upload_test"}' style="width: 400px;">
+        </div>
+        
+        <button type="submit">🚀 Test Upload</button>
+    </form>
+    
+    <div id="results" class="result" style="display: none;">
+        <h3>Results:</h3>
+        <pre id="results-content"></pre>
+    </div>
+    
+    <script>
+        document.getElementById('test-form').onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const resultsDiv = document.getElementById('results');
+            const resultsContent = document.getElementById('results-content');
+            
+            resultsDiv.style.display = 'block';
+            resultsContent.textContent = '⏳ Processing...';
+            
+            const formData = new FormData();
+            const imageFile = document.getElementById('image').files[0];
+            const metadata = document.getElementById('metadata').value;
+            
+            if (!imageFile) {
+                resultsContent.textContent = '❌ Please select an image file';
+                return;
+            }
+            
+            formData.append('image', imageFile);
+            formData.append('metadata', metadata);
+            
+            try {
+                console.log('Sending request to /api/analyze...');
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                console.log('Response status:', response.status);
+                const results = await response.json();
+                console.log('Results:', results);
+                
+                resultsContent.textContent = JSON.stringify(results, null, 2);
+                
+                // Also show specific image features if available
+                if (results.image_features) {
+                    const summary = `
+📊 ANALYSIS SUMMARY:
+- Status: ${results.status}
+- Image Features: ${results.image_features.shape.join('x')} dimensions
+- Sample Features: [${results.image_features.sample.slice(0, 5).map(x => x.toFixed(3)).join(', ')}...]
+- Audio Features: ${results.audio_features ? results.audio_features.shape.join('x') : 'None'}
+- Integration: ${results.integrated_data ? 'Success' : 'None'}
+- Errors: ${results.errors.length}
+
+Full Results:
+${JSON.stringify(results, null, 2)}`;
+                    resultsContent.textContent = summary;
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultsContent.textContent = '❌ Error: ' + error.message;
+            }
+        };
+    </script>
+</body>
+</html>
