@@ -53,7 +53,7 @@ A comprehensive multi-modal analytics platform designed for researchers, academi
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/multimodal-analytics-platform.git
+   git clone https://github.com/stix26/multimodal-analytics-platform.git
    cd multimodal-analytics-platform
    ```
 
@@ -271,9 +271,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/multimodal-analytics-platform/issues)
-- **Documentation**: [Project Wiki](https://github.com/yourusername/multimodal-analytics-platform/wiki)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/multimodal-analytics-platform/discussions)
+- **Issues**: [GitHub Issues](https://github.com/stix26/multimodal-analytics-platform/issues)
+- **Documentation**: [Project Wiki](https://github.com/stix26/multimodal-analytics-platform/wiki)
+- **Discussions**: [GitHub Discussions](https://github.com/stix26/multimodal-analytics-platform/discussions)
 
 ---
 
@@ -281,6 +281,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ for the research and academic community**
 
-[⭐ Star this repo](https://github.com/yourusername/multimodal-analytics-platform) | [🍴 Fork it](https://github.com/yourusername/multimodal-analytics-platform/fork) | [📢 Share it](https://twitter.com/intent/tweet?text=Check%20out%20this%20amazing%20multi-modal%20analytics%20platform!)
+[⭐ Star this repo](https://github.com/stix26/multimodal-analytics-platform) | [🍴 Fork it](https://github.com/stix26/multimodal-analytics-platform/fork) | [📢 Share it](https://twitter.com/intent/tweet?text=Check%20out%20this%20amazing%20multi-modal%20analytics%20platform!)
 
 </div>
