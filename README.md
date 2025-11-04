@@ -78,21 +78,23 @@ A comprehensive multi-modal analytics platform designed for researchers, academi
    http://127.0.0.1:5000
    ```
 
-### 🎯 **Instant Demo with Sample Files**
+### 🎯 **Testing with Sample Data**
 
-The platform includes ready-to-use sample files for immediate testing:
+The platform includes ready-to-use sample metadata for immediate testing:
 
 ```bash
-# Quick Multi-Modal Test
-Image: project/samples/images/gradient_sample.jpg
-Audio: project/samples/audio/sine_wave_440hz.wav  
-Metadata: project/samples/metadata/basic_metadata.json
+# Available Sample Metadata Files:
+project/samples/metadata/basic_metadata.json          # Simple test metadata
+project/samples/metadata/multimodal_metadata.json     # Advanced metadata example
+project/samples/metadata/audio_metadata.json          # Audio-specific metadata
+project/samples/metadata/advanced_metadata.json       # Complex metadata structure
+project/samples/metadata/production_metadata.json     # Production-ready example
 
-# Advanced Test
-Image: project/samples/images/red_sample.jpg
-Audio: project/samples/audio/a_major_chord.wav
-Metadata: project/samples/metadata/multimodal_metadata.json
+# Combined Test Configuration:
+project/samples/combined/test_batch_1.json           # Batch processing example
 ```
+
+**Note**: To test multi-modal analysis, upload your own image and audio files through the web interface, then use the provided sample metadata files.
 
 ---
 
@@ -117,9 +119,16 @@ Metadata: project/samples/metadata/multimodal_metadata.json
 #### Multi-Modal Analysis
 ```bash
 curl -X POST \
-  -F "image=@project/samples/images/gradient_sample.jpg" \
-  -F "audio=@project/samples/audio/sine_wave_440hz.wav" \
+  -F "image=@your_image.jpg" \
+  -F "audio=@your_audio.wav" \
   -F 'metadata={"source": "api", "quality": "high"}' \
+  http://127.0.0.1:5000/api/analyze
+
+# Or use sample metadata:
+curl -X POST \
+  -F "image=@your_image.jpg" \
+  -F "audio=@your_audio.wav" \
+  -F "metadata=@project/samples/metadata/basic_metadata.json" \
   http://127.0.0.1:5000/api/analyze
 ```
 
